@@ -8,15 +8,21 @@
     "start": "next start"
   },
   "dependencies": {
+    "canvas": "^2.8.0",
     "collectionstypescript": "^1.1.4",
+    "konva": "^8.0.1",
+    "lodash": "^4.17.21",
     "next": "10.2.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-konva": "^17.0.2-4",
     "styled-components": "^5.3.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.170",
     "@types/react": "^17.0.6",
     "@types/styled-components": "^5.1.9",
+    "next-transpile-modules": "^7.2.0",
     "prettier": "^2.3.0",
     "typescript": "^4.2.4"
   }
