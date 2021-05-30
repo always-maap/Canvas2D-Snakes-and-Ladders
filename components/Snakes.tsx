@@ -1,10 +1,26 @@
 import { Image } from "react-konva";
 import useImage from "use-image";
+import { FC } from "react";
+import { getPointsInfo } from "../helpers/pointInfoHelper";
+import { getCoordinates } from "../helpers/cordinateHelper";
 
-const Snakes = () => {
-  const [image] = useImage("/assets/images/snakes/medium.png");
+type Props = {
+  startPos: number;
+  endPos: number;
+};
 
-  return <Image image={image} x={900} y={900} width={200} height={900} rotation={135} />;
+const Snakes: FC<Props> = (props) => {
+  const { startPos, endPos } = props;
+  // const [smallSnake] = useImage("/assets/images/snakes/small.png");
+  // const [mediumSnake] = useImage("/assets/images/snakes/medium.png");
+  const [largeSnake] = useImage("/assets/images/snakes/long.png");
+
+  const { x: startX, y: startY } = getCoordinates(startPos);
+  const { x: endX, y: endY } = getCoordinates(endPos);
+
+  const { distance, angel } = getPointsInfo(startX, startY, endX, endY);
+
+  return <Image x={startX} y={startY} width={30} height={distance} rotation={angel} image={largeSnake} />;
 };
 
 export default Snakes;
