@@ -1,12 +1,12 @@
 import { Layer, Stage } from "react-konva";
 import Grid from "../components/Grid";
-import Snakes from "../components/Snakes";
-import { getSnakes } from "../helpers/snakesHelper";
+import Snake from "../components/Snake";
+import { getLadders, getSnakes } from "../helpers";
+import Ladder from "../components/Ladder";
 
 export default function Home() {
   const snakes = getSnakes();
-
-  console.log(snakes);
+  const ladders = getLadders();
 
   return (
     <>
@@ -14,7 +14,10 @@ export default function Home() {
         <Layer>
           <Grid />
           {snakes.map((snake) => (
-            <Snakes key={snake.id} startPos={snake.startPos} endPos={snake.endPos} />
+            <Snake key={snake.id} startPos={snake.startPos} endPos={snake.endPos} />
+          ))}
+          {ladders.map((ladder) => (
+            <Ladder key={ladder.id} startPos={ladder.startPos} endPos={ladder.endPos} />
           ))}
         </Layer>
       </Stage>
