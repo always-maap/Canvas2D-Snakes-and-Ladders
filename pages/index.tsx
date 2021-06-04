@@ -15,7 +15,7 @@ export default function Home() {
   const ladders = getLadders();
 
   useEffect(() => {
-    const redrawFn = (e: any) => redraw(e.target.outerWidth, e.target.outerHeight);
+    const redrawFn = (e: any) => redraw(e.target.outerWidth);
     window.addEventListener(
       "resize",
       debounce((e) => redrawFn(e), 200)

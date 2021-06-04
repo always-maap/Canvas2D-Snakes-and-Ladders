@@ -5,18 +5,17 @@ import { useRedraw } from "../store/useRedraw";
 const Grid = () => {
   const size = useRedraw((state) => state.size);
   const layout = getLayout(size, size);
-
-  const s = size / 10;
+  const boxWidth = size / 10;
 
   return (
     <>
       {Object.keys(layout).map((box: string) => (
         <Group key={`box_${box}`}>
           <Rect
-            x={layout[box].x - s / 2}
-            y={layout[box].y - s / 2}
-            width={s}
-            height={s}
+            x={layout[box].x - boxWidth / 2}
+            y={layout[box].y - boxWidth / 2}
+            width={boxWidth}
+            height={boxWidth}
             cornerRadius={10}
             fill="orangered"
             scale={{ x: 0.92, y: 0.92 }}
@@ -27,8 +26,8 @@ const Grid = () => {
             shadowColor="rgba(0,0,0,0.2)"
           />
           <Text
-            x={layout[box].x - 50 / 2}
-            y={layout[box].y - 50 / 2}
+            x={layout[box].x - boxWidth / 2}
+            y={layout[box].y - boxWidth / 2}
             fill="rgba(0,0,0,0.6)"
             text={box}
             padding={4}
