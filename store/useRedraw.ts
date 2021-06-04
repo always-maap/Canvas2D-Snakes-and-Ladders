@@ -2,22 +2,21 @@ import { combine } from "zustand/middleware";
 import create from "zustand";
 
 export const useRedraw = create(
-  combine({ size: 1000 }, (set) => ({
-    redraw: (width: number, height: number) => {
-      console.log("yo");
-      if (width < 768) {
-        set((state) => {
-          return { size: 700 };
-        });
-      } else if (width < 576) {
-        set((state) => {
-          return { size: 500 };
-        });
+  combine({ size: 900 }, (set) => ({
+    redraw: (width: number) => {
+      let newSize = 900;
+      if (width < 360) {
+        newSize = 300;
+      } else if (width > 360 && width < 576) {
+        newSize = 360;
+      } else if (width > 576 && width < 768) {
+        newSize = 576;
+      } else if (width > 768 && width < 1024) {
+        newSize = 768;
       } else {
-        set((state) => {
-          return { size: 300 };
-        });
+        newSize = 900;
       }
+      set(() => ({ size: newSize }));
     },
   }))
 );

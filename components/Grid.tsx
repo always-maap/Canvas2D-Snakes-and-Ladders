@@ -1,18 +1,22 @@
 import { Group, Rect, Text } from "react-konva";
 import { getLayout } from "../helpers/layoutHelper";
+import { useRedraw } from "../store/useRedraw";
 
 const Grid = () => {
-  const layout = getLayout(700, 700);
+  const size = useRedraw((state) => state.size);
+  const layout = getLayout(size, size);
+
+  const s = size / 10;
 
   return (
     <>
       {Object.keys(layout).map((box: string) => (
         <Group key={`box_${box}`}>
           <Rect
-            x={layout[box].x - 50 / 2}
-            y={layout[box].y - 50 / 2}
-            width={65}
-            height={65}
+            x={layout[box].x - s / 2}
+            y={layout[box].y - s / 2}
+            width={s}
+            height={s}
             cornerRadius={10}
             fill="orangered"
             scale={{ x: 0.92, y: 0.92 }}

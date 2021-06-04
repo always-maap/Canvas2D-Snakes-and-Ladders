@@ -18,15 +18,13 @@ export default function Home() {
     const redrawFn = (e: any) => redraw(e.target.outerWidth, e.target.outerHeight);
     window.addEventListener(
       "resize",
-      debounce((e) => redrawFn(e), 500)
+      debounce((e) => redrawFn(e), 200)
     );
   }, []);
 
-  console.log(size);
-
   return (
     <Root>
-      <Stage width={700} height={700}>
+      <Stage width={size} height={size}>
         <Layer>
           <Grid />
           {snakes.map((snake) => (
