@@ -9,12 +9,10 @@ import { GlobalStyles } from "../theme/globalStyles";
 function App({ Component, pageProps }: AppProps) {
   const theme = useTheme((state) => state.theme);
 
-  console.log(theme);
-
   return (
     <ThemeProvider theme={theme === "light" ? light : dark}>
-      <GlobalStyles />
       <Layout>
+        <GlobalStyles />
         <Component {...pageProps} />
       </Layout>
     </ThemeProvider>

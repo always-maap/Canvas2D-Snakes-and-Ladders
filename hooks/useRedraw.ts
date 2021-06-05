@@ -1,20 +1,19 @@
 import create from "zustand";
 import { combine } from "zustand/middleware";
+import { BREAKPOINTS } from "../theme/breakpoints";
 
 export const useRedraw = create(
-  combine({ size: 900 }, (set) => ({
+  combine({ size: BREAKPOINTS.lg }, (set) => ({
     redraw: (width: number) => {
-      let newSize = 900;
-      if (width < 360) {
-        newSize = 300;
-      } else if (width > 360 && width < 576) {
-        newSize = 360;
-      } else if (width > 576 && width < 768) {
-        newSize = 576;
-      } else if (width > 768 && width < 1024) {
-        newSize = 768;
+      let newSize = BREAKPOINTS.lg;
+      if (width < BREAKPOINTS.sm) {
+        newSize = BREAKPOINTS.xs;
+      } else if (width > BREAKPOINTS.sm && width < BREAKPOINTS.md) {
+        newSize = BREAKPOINTS.sm;
+      } else if (width > BREAKPOINTS.md && width < BREAKPOINTS.lg) {
+        newSize = BREAKPOINTS.md;
       } else {
-        newSize = 900;
+        newSize = BREAKPOINTS.lg;
       }
       set(() => ({ size: newSize }));
     },

@@ -4,4 +4,5 @@ export const COLORS = {
   dark: "#191923",
   pink: "#f498bf",
   grey: "#70727a",
+  dark_purple: "#130c21",
 };
