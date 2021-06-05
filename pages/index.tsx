@@ -6,7 +6,7 @@ import Ladder from "../components/Ladder";
 import { useEffect } from "react";
 import { debounce } from "lodash";
 import styled from "styled-components";
-import { useRedraw } from "../store/useRedraw";
+import { useRedraw } from "../hooks/useRedraw";
 
 export default function Home() {
   const redraw = useRedraw((state) => state.redraw);

@@ -1,5 +1,5 @@
 import { getLayout } from "./layoutHelper";
-import { useRedraw } from "../store/useRedraw";
+import { useRedraw } from "../hooks/useRedraw";
 
 export const getCoordinates = (pos: number) => {
   const size = useRedraw((state) => state.size);
