@@ -1,8 +1,9 @@
-import { Image } from "react-konva";
 import useImage from "use-image";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { getCoordinates } from "../helpers";
 import { useRedraw } from "../hooks/useRedraw";
+import { animated } from "@react-spring/konva";
+import { useSpring } from "react-spring";
 
 type Props = {
   pos: number;
@@ -16,8 +17,25 @@ const Player: FC<Props> = (props) => {
   const { x, y } = getCoordinates(pos);
   const playerSize = size / 10;
 
+  const [flip, set] = useState(false);
+  const animationProps = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    reset: true,
+    reverse: flip,
+    delay: 200,
+    onRest: () => set(!flip),
+  });
+
   return (
-    <Image x={x - playerSize / 2} y={y - playerSize / 2} width={playerSize} height={playerSize} image={largeSnake} />
+    <animated.Image
+      {...animationProps}
+      x={x - playerSize / 2}
+      y={y - playerSize / 2}
+      width={playerSize}
+      height={playerSize}
+      image={largeSnake}
+    />
   );
 };
 

@@ -9,7 +9,10 @@ const Layout: FC = (props) => {
 
   return (
     <>
-      <Nav>{theme === "light" ? <CgMoon onClick={toggle} /> : <CgSun onClick={toggle} />}</Nav>
+      <Nav>
+        {theme === "light" ? <CgMoon onClick={toggle} /> : <CgSun onClick={toggle} />}
+        <button onClick={() => {}}>roll dice</button>
+      </Nav>
       {children}
     </>
   );
