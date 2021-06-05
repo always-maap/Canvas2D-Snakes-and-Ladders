@@ -6,7 +6,7 @@ import { getPlayers } from "../helpers/playerHelper";
 
 export const useBoard = create(
   combine(
-    { board: new DoublyLinkedList(), snakes: getSnakes(), ladders: getLadders(), players: getPlayers(), turn: 1 },
+    { board: new DoublyLinkedList(), snakes: getSnakes(), ladders: getLadders(), players: getPlayers(), turn: 0 },
     (set) => ({
       init: () => {
         return set((state) => {
@@ -23,7 +23,15 @@ export const useBoard = create(
           return { board: newBoard };
         });
       },
-      rollDice: () => {},
+      rollDice: () => {
+        const diceNum = Math.ceil(Math.random() * 6);
+        return set((state) => {
+          const players = state.players;
+          const newPlayerPos = players[state.turn];
+          newPlayerPos.pos += diceNum;
+          return { players: players, turn: state.turn === 0 ? 1 : 0 };
+        });
+      },
     })
   )
 );

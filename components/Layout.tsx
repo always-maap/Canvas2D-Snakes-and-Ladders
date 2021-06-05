@@ -2,16 +2,18 @@ import { FC } from "react";
 import { useTheme } from "../hooks/useTheme";
 import styled from "styled-components";
 import { CgSun, CgMoon } from "react-icons/cg";
+import { useBoard } from "../hooks/useBoard";
 
 const Layout: FC = (props) => {
   const { children } = props;
-  const { theme, toggle } = useTheme((state) => state);
+  const { theme, toggle } = useTheme();
+  const rollDice = useBoard((state) => state.rollDice);
 
   return (
     <>
       <Nav>
         {theme === "light" ? <CgMoon onClick={toggle} /> : <CgSun onClick={toggle} />}
-        <button onClick={() => {}}>roll dice</button>
+        <button onClick={rollDice}>roll dice</button>
       </Nav>
       {children}
     </>
