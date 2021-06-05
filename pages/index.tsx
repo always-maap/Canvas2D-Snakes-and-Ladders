@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { debounce } from "lodash";
 import styled from "styled-components";
 import { useRedraw } from "../hooks/useRedraw";
+import Player from "../components/Player";
 
 export default function Home() {
   const redraw = useRedraw((state) => state.redraw);
@@ -33,6 +34,7 @@ export default function Home() {
           {ladders.map((ladder) => (
             <Ladder key={ladder.id} startPos={ladder.startPos} endPos={ladder.endPos} />
           ))}
+          <Player pos={1} />
         </Layer>
       </Stage>
     </Root>

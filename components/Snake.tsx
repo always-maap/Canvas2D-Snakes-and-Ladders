@@ -10,8 +10,6 @@ type Props = {
 
 const Snake: FC<Props> = (props) => {
   const { startPos, endPos } = props;
-  // const [smallSnake] = useImage("/assets/images/snakes/short.png");
-  // const [mediumSnake] = useImage("/assets/images/snakes/medium.png");
   const [largeSnake] = useImage("/assets/images/snakes/long.png");
 
   const { x: startX, y: startY } = getCoordinates(startPos);
