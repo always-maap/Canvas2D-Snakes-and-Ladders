@@ -23,6 +23,11 @@ to check other existing commands please check out scripts block in package.json
 ## Tech Stack
 <div align="center">
     <p align="center">
-        <img src="https://raw.githubusercontent.com/always-maap/Canvas2D-Snakes-and-Ladders/main/game.gif" alt="Snakes and Ladders Logo" />
+        <img width="600px" src="https://raw.githubusercontent.com/always-maap/Canvas2D-Snakes-and-Ladders/main/game.gif" alt="Snakes and Ladders Logo" />
     </p>
 </div>
+
+* React-Konva: Declarative and reactive bindings for konva framework
+* Zustand: State management in React
+* React-Spring: Spring-physics based animation library 
+* Immer: Create the next immutable state by mutating the current one
