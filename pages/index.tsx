@@ -12,14 +12,13 @@ import { useBoard } from "../hooks/useBoard";
 export default function Home() {
   const redraw = useRedraw((state) => state.redraw);
   const size = useRedraw((state) => state.size);
-  const { snakes, ladders, players, init } = useBoard();
+  const { snakes, ladders, players } = useBoard();
 
   useEffect(() => {
-    init();
     const redrawFn = (e: any) => redraw(e.target.outerWidth);
     window.addEventListener(
       "resize",
-      debounce((e) => redrawFn(e), 200)
+      debounce((e) => redrawFn(e), 250)
     );
   }, []);
 

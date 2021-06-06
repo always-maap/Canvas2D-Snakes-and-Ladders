@@ -4,6 +4,7 @@ import { getCoordinates } from "../helpers";
 import { useRedraw } from "../hooks/useRedraw";
 import { animated } from "@react-spring/konva";
 import { useSpring } from "react-spring";
+import { useBoard } from "../hooks/useBoard";
 
 type Props = {
   id: number;
@@ -12,9 +13,11 @@ type Props = {
 
 const Player: FC<Props> = (props) => {
   const { pos, id } = props;
-  const size = useRedraw((state) => state.size);
   const [cutePink] = useImage("/assets/images/players/cute-pink.svg");
   const [blueGem] = useImage("/assets/images/players/blue-gem.svg");
+
+  const size = useRedraw((state) => state.size);
+  const checkPlacement = useBoard((state) => state.checkPlacement);
 
   const { x, y } = getCoordinates(pos);
   const playerSize = size / 10;
@@ -28,7 +31,10 @@ const Player: FC<Props> = (props) => {
     from: { x: prevPos.current.x, y: prevPos.current.y },
     to: { x: xPos, y: yPos },
     reset: true,
-    onRest: () => (prevPos.current = { x: xPos, y: yPos }),
+    onRest: () => {
+      setTimeout(checkPlacement, 500);
+      prevPos.current = { x: xPos, y: yPos };
+    },
   });
 
   return (

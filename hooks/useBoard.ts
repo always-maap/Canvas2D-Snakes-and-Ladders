@@ -1,37 +1,53 @@
-import create from "zustand";
+import create, { GetState, SetState, State, StoreApi } from "zustand";
 import { combine } from "zustand/middleware";
-import { DoublyLinkedList } from "collectionstypescript";
 import { getLadders, getSnakes } from "../helpers";
 import { getPlayers } from "../helpers/playerHelper";
+import produce from "immer";
+
+type StateCreator<T extends State, CustomSetState = SetState<T>, U extends State = T> = (
+  set: CustomSetState,
+  get: GetState<T>,
+  api: StoreApi<T>
+) => U;
+
+const immer =
+  <T extends State, U extends State>(
+    config: StateCreator<T, (fn: (draft: T) => void) => void, U>
+  ): StateCreator<T, SetState<T>, U> =>
+  (set, get, api) =>
+    config((fn) => set(produce(fn)), get, api);
 
 export const useBoard = create(
   combine(
-    { board: new DoublyLinkedList(), snakes: getSnakes(), ladders: getLadders(), players: getPlayers(), turn: 0 },
-    (set) => ({
-      init: () => {
-        return set((state) => {
-          const newBoard = state.board;
-          for (let i = 1; i <= 100; i++) {
-            if (state.snakes.find((snake) => snake.startPos === i)) {
-              newBoard.push(1);
-            } else if (state.ladders.find((ladder) => ladder.startPos === i)) {
-              newBoard.push(2);
-            } else {
-              newBoard.push(0);
-            }
-          }
-          return { board: newBoard };
-        });
-      },
+    {
+      snakes: getSnakes(),
+      ladders: getLadders(),
+      players: getPlayers(),
+      turn: 0,
+    },
+    immer((set) => ({
       rollDice: () => {
         const diceNum = Math.ceil(Math.random() * 6);
         return set((state) => {
-          const players = state.players;
-          const newPlayerPos = players[state.turn];
-          newPlayerPos.pos += diceNum;
-          return { players: players, turn: state.turn === 0 ? 1 : 0 };
+          state.players[state.turn].pos += diceNum;
+          return void (state.turn = state.turn === 0 ? 1 : 0);
         });
       },
-    })
+      checkPlacement: () => {
+        return set((state) => {
+          const prevTurn = state.turn === 0 ? 1 : 0;
+          const prevPlayerCurrPos = state.players[prevTurn].pos;
+
+          const s = state.snakes.find((snake) => snake.startPos === prevPlayerCurrPos);
+          const l = state.ladders.find((ladder) => ladder.startPos === prevPlayerCurrPos);
+
+          if (s) {
+            return void (state.players[prevTurn].pos = s.endPos);
+          } else if (l) {
+            return void (state.players[prevTurn].pos = l.endPos);
+          }
+        });
+      },
+    }))
   )
 );
