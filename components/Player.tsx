@@ -1,5 +1,5 @@
 import useImage from "use-image";
-import { FC, useState } from "react";
+import { FC, useRef } from "react";
 import { getCoordinates } from "../helpers";
 import { useRedraw } from "../hooks/useRedraw";
 import { animated } from "@react-spring/konva";
@@ -19,14 +19,20 @@ const Player: FC<Props> = (props) => {
   const { x, y } = getCoordinates(pos);
   const playerSize = size / 10;
 
+  const xPos = x - playerSize / 2;
+  const yPos = y - playerSize / 2;
+
+  const prevPos = useRef({ x: xPos, y: yPos });
+
+  const animationProps = useSpring({
+    from: { x: prevPos.current.x, y: prevPos.current.y },
+    to: { x: xPos, y: yPos },
+    reset: true,
+    onRest: () => (prevPos.current = { x: xPos, y: yPos }),
+  });
+
   return (
-    <animated.Image
-      x={x - playerSize / 2}
-      y={y - playerSize / 2}
-      width={playerSize}
-      height={playerSize}
-      image={id === 1 ? cutePink : blueGem}
-    />
+    <animated.Image {...animationProps} width={playerSize} height={playerSize} image={id === 1 ? cutePink : blueGem} />
   );
 };
 

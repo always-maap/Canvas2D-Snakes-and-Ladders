@@ -12,7 +12,7 @@ import { useBoard } from "../hooks/useBoard";
 export default function Home() {
   const redraw = useRedraw((state) => state.redraw);
   const size = useRedraw((state) => state.size);
-  const { board, snakes, ladders, players, init } = useBoard();
+  const { snakes, ladders, players, init } = useBoard();
 
   useEffect(() => {
     init();
@@ -22,8 +22,6 @@ export default function Home() {
       debounce((e) => redrawFn(e), 200)
     );
   }, []);
-
-  console.log(board);
 
   return (
     <Root>
